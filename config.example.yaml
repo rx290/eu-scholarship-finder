@@ -1,0 +1,29 @@
+# Copy to config.local.yaml and fill in your real values.
+# config.local.yaml is gitignored, so never commit real personal data here.
+#
+# If you're running this inside Claude Code via the grant-compass skill,
+# Claude will ask you for these values directly and fill them in for you.
+# You don't have to edit this file by hand.
+
+applicant:
+  name: "Your Name"
+  degree_target: [MS]               # any of: Bachelors, MS, PhD (pick one or more)
+  field_keywords:
+    - robotics
+    - embedded systems
+    - computer engineering
+    - machine learning
+  gpa: 3.5                          # your grade on whatever scale you use (GPA, CGPA, percentage, etc.)
+  gpa_scale: 4.0                    # e.g. 4.0, 5.0, or 100 for a percentage
+  countries: [Europe]               # default: all of Europe. Narrow it if you want, e.g. [Germany, Netherlands]
+
+search:
+  venues:                           # conference venues professors.py queries via OpenReview (PhD/MS only)
+    - ICRA
+    - IROS
+    - NeurIPS
+  max_papers_per_venue: 50
+  years: [2025, 2026]
+
+output:
+  top_n: 15

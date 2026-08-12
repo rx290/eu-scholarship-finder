@@ -1,0 +1,165 @@
+# Curated registry of official/aggregator European scholarship & program sources.
+# `has_api: true` sources are fetched programmatically (see professors.py for the
+# only networked script in this repo). `has_api: false` sources have no stable
+# public API/RSS — the grant-compass skill instructs Claude to hit these
+# live via WebSearch/WebFetch at run time, using {query} built from the
+# applicant's field_keywords + degree_target, and to write compact structured
+# JSON (not raw page text) to data/programs_raw.json.
+#
+# `levels`: which degree levels an entry is relevant for — any of
+#   Bachelors, MS, PhD
+# `region`: currently always "Europe" — kept as a field (not hardcoded) so a
+# future non-EU registry can be added alongside this one without a rewrite.
+
+# --- Aggregator platforms: cover ALL degree levels, one query surfaces many
+# --- individual scholarships. Check these first — cheapest way to get broad
+# --- coverage before querying single-scheme sites one at a time.
+
+- name: Scholarshipportal.com
+  url_template: "https://www.scholarshipportal.com/scholarships/{query}/europe"
+  has_api: false
+  levels: [Bachelors, MS, PhD]
+  region: Europe
+  notes: >
+    StudyPortals-network aggregator indexing thousands of scholarships across
+    all degree levels and most European countries/providers. Best first stop.
+
+- name: Bachelorsportal.com
+  url_template: "https://www.bachelorsportal.com/search/bachelor/europe/{query}"
+  has_api: false
+  levels: [Bachelors]
+  region: Europe
+  notes: "StudyPortals aggregator for bachelor's degree programs, filterable by funding/scholarship."
+
+- name: Mastersportal.com
+  url_template: "https://www.mastersportal.com/search/master/europe/{query}"
+  has_api: false
+  levels: [MS]
+  region: Europe
+  notes: "StudyPortals aggregator for master's programs, filterable by funding/scholarship."
+
+- name: PhDportal.com
+  url_template: "https://www.phdportal.com/search/phd/europe/{query}"
+  has_api: false
+  levels: [PhD]
+  region: Europe
+  notes: "StudyPortals aggregator for funded PhD positions across Europe."
+
+- name: European Funding Guide
+  url_template: "https://www.european-funding-guide.eu/scholarships?search={query}"
+  has_api: false
+  levels: [Bachelors, MS, PhD]
+  region: Europe
+  notes: "Independent EU-wide scholarship database, all degree levels."
+
+# --- Official EU-wide / multi-country schemes ---
+
+- name: Erasmus+ (mobility & joint degrees, incl. undergrad)
+  url_template: "https://erasmus-plus.ec.europa.eu/opportunities/opportunities-for-individuals?f%5B0%5D=field_topics%3A{query}"
+  has_api: false
+  levels: [Bachelors, MS]
+  region: Europe
+  notes: >
+    Covers both short-term funded mobility for bachelor's students and
+    Erasmus Mundus Joint Masters (fully funded, tuition + stipend). Filter by
+    level on the portal — bachelor's mobility is typically partial funding
+    (grant top-up), Erasmus Mundus Masters is fully funded.
+
+- name: Erasmus Mundus Joint Masters Catalogue
+  url_template: "https://www.eacea.ec.europa.eu/scholarships/erasmus-mundus-catalogue_en?f%5B0%5D=field_area%3A{query}"
+  has_api: false
+  levels: [MS]
+  region: Europe
+  notes: >
+    Fully-funded joint MS programs across 2+ EU universities. Search/browse the
+    catalogue live; no public API.
+
+- name: MSCA Doctoral Networks (Marie Curie)
+  url_template: "https://marie-sklodowska-curie-actions.ec.europa.eu/actions/doctoral-networks"
+  has_api: false
+  levels: [PhD]
+  region: Europe
+  notes: >
+    EU-funded PhD networks. Open calls and funded-project lists are published
+    on this portal and on the EU Funding & Tenders portal (ec.europa.eu/info/funding-tenders).
+    No stable public API — check live.
+
+- name: EURAXESS Jobs
+  url_template: "https://euraxess.ec.europa.eu/jobs/search?f%5B0%5D=job_field%3A{query}&f%5B1%5D=country%3AEurope"
+  has_api: false
+  levels: [PhD]
+  region: Europe
+  notes: >
+    Pan-European researcher job board, includes funded PhD positions. Has an
+    RSS feed per saved search (append &format=rss to a search URL) — prefer
+    that over scraping the HTML when possible.
+
+# --- National / country-specific schemes (open to international students) ---
+
+- name: DAAD Scholarship Database (Germany)
+  url_template: "https://www2.daad.de/deutschland/stipendium/datenbank/en/21148-scholarship-database/?status=1&origin=126&subjectGrps=&daad=&intention=&q={query}"
+  has_api: false
+  levels: [Bachelors, MS, PhD]
+  region: Europe
+  notes: >
+    Germany-wide scholarship search covering all degree levels. Filter by
+    subject group and degree. No stable public API — search live via WebFetch.
+
+- name: Stipendium Hungaricum (Hungary)
+  url_template: "https://stipendiumhungaricum.hu/apply/study-programmes-2/?search={query}"
+  has_api: false
+  levels: [Bachelors, MS, PhD]
+  region: Europe
+  notes: "Hungarian government scholarship, fully funded, all degree levels, open to international applicants."
+
+- name: Türkiye Scholarships (Türkiye Bursları)
+  url_template: "https://turkiyeburslari.gov.tr/en/page/programs-and-fields/find-a-program?keyword={query}"
+  has_api: false
+  levels: [Bachelors, MS, PhD]
+  region: Europe
+  notes: "Turkish government scholarship, fully funded, all degree levels. Treated here as part of the wider Europe/Eurasia study region."
+
+- name: AcademicTransfer (Netherlands)
+  url_template: "https://www.academictransfer.com/en/jobs/?discipline={query}&position=phd"
+  has_api: false
+  levels: [PhD]
+  region: Europe
+  notes: "Dutch university PhD/postdoc job board; Dutch PhDs are salaried positions (funded by default)."
+
+- name: AcademicPositions.com
+  url_template: "https://academicpositions.com/find-jobs?query={query}&region=europe&job-type=phd-studentship"
+  has_api: false
+  levels: [PhD]
+  region: Europe
+  notes: "Aggregator across European universities, filterable by field/country/funding."
+
+- name: FindAPhD (funded only, Europe)
+  url_template: "https://www.findaphd.com/phds/{query}/?01f=48&funding=Funded"
+  has_api: false
+  levels: [PhD]
+  region: Europe
+  notes: >
+    Filter to Europe + Funded. ToS discourages automated scraping — fetch
+    individual result pages live via WebFetch on demand, don't bulk-crawl.
+
+# --- Programmatic APIs (used by professors.py only) ---
+
+- name: OpenReview (conference papers -> PI discovery)
+  url_template: "https://api2.openreview.net/notes/search?term={query}"
+  has_api: true
+  levels: [MS, PhD]
+  region: Europe
+  notes: >
+    Used by professors.py only. Public read API, no key required, no ToS
+    concerns — this is the one component in this repo that makes its own
+    HTTP calls.
+
+- name: OpenAlex (author/institution enrichment)
+  url_template: "https://api.openalex.org/authors?search={query}"
+  has_api: true
+  levels: [MS, PhD]
+  region: Europe
+  notes: >
+    Used by professors.py to enrich last authors with h-index, works count,
+    and institution/country. Free, public, no key required (set a mailto in
+    the User-Agent per OpenAlex's polite-pool guidance if you extend this).

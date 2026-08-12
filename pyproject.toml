@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "grantcompass"
+version = "0.1.0"
+description = "Token-efficient finder for fully-funded scholarships at any degree level (Bachelor's/Master's/PhD), defaulting to Europe, and matching PIs"
+requires-python = ">=3.10"
+dependencies = ["requests>=2.31", "pyyaml>=6.0"]
+
+[project.scripts]
+grantcompass = "grantcompass.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+grantcompass = ["sources.yaml"]
